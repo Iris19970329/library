@@ -34,7 +34,7 @@ public class UserController {
 		if (loginmesg == "success") {
 			session.setAttribute("phonenumber", user.getPhoneNumber());
 			session.setAttribute("username",user.getUserName());
-			return "login success";
+			return "login successs";
 		}else {
 			return "login fail";
 		}
