@@ -9,34 +9,41 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @IdClass(Borrowingrecord.BorrowingrecordId.class)
 public class Borrowingrecord implements Serializable {
 
 	@Id
-	private int userId;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "userId")
+	private User userId;
 	
 	@Id
-	private int inventoryId;
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "inventoryId")
+	private Inventory inventoryId;
 	
 	private Date borrowingTime;
 	private Date returnTime;
 	
 
-	public int getUserId() {
+
+
+	public User getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 
-	public int getInventoryId() {
+	public Inventory getInventoryId() {
 		return inventoryId;
 	}
 
-	public void setInventoryId(int inventoryId) {
+	public void setInventoryId(Inventory inventoryId) {
 		this.inventoryId = inventoryId;
 	}
 
@@ -62,14 +69,14 @@ public class Borrowingrecord implements Serializable {
 	
 	
 	public static class BorrowingrecordId implements Serializable {
-	    private int userId;
-	    private int inventoryId;
+	    private User userId;
+	    private Inventory inventoryId;
 	    
 	    public BorrowingrecordId() {
 			
 		}
 	    
-	    public BorrowingrecordId(int userId, int inventoryId) {
+	    public BorrowingrecordId(User userId, Inventory inventoryId) {
 
 	    	this.userId=userId;
 	    	this.inventoryId=inventoryId;

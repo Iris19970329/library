@@ -19,11 +19,11 @@ public class UserController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody User user) {
-		User aduser =userservice.signup(user);
-		if (aduser != null) {
+		try{
+			User aduser =userservice.signup(user);
 			return ResponseEntity.ok(aduser);
-		} else {
-			return ResponseEntity.notFound().build();
+		} catch(Exception e ) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		
 	}

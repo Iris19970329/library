@@ -48,6 +48,13 @@ public class Inventory {
 		
 	}
 	
+	public Inventory( String iSBN, Date storeTime, String status ) {
+	
+		this.iSBN = iSBN;
+		this.storeTime = storeTime;
+		this.status = status;
+	}
+	
 	public Inventory(int inventoryId, String iSBN, Date storeTime, String status ) {
 		this.inventoryId = inventoryId;
 		this.iSBN = iSBN;

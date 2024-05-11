@@ -31,12 +31,6 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="main.html" style="color: white;">首頁</a>
 						</li>
-						<!-- <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: white;">我要揪團</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: white;">場地資訊</a>
-                        </li> -->
 					</ul>
 					<a href="login.html" class="btn btn-light ms-auto">登入</a>
 					<a href="signup.html" class="btn btn-light mx-3">註冊</a>
@@ -49,7 +43,6 @@
 				<form id="loginform" style="width:40%; margin: 11% auto; background-color: white; border-radius: 15px;">
 					<div style="margin-left: 45px; margin-top: 45px;">
 						<p style="font-size:36px; padding-top:25px;">登入</p>
-						<!-- <p id="mesg">{{ message }}</p> -->
 					</div>
 					<div class="row px-5">
 						<label class="col" style="font-size: 24px; margin-top:15px;">手機</label>
@@ -74,16 +67,7 @@
 	</div>
 
 	<script>
-		// const { createApp, ref } = Vue
 
-		// createApp({
-		//   setup() {
-		//     const message = ref('Hello vue!')
-		//     return {
-		//       message
-		//     }
-		//   }
-		// }).mount('#mesg')
 		const app ={
             data() {
                 return {
@@ -97,12 +81,13 @@
                         phoneNumber: this.telephone,
                         password: this.passwd
                     };
-
+					
                     axios.post('/login', loginData)
                         .then(response => {
 							console.log(response.data);
         					if(response.data === "login_success"){
 								alert('登入成功');
+								window.location.href = 'main.html';
 								
 							}else{
 								alert('登入失敗');
@@ -113,6 +98,7 @@
                         .catch(error => {
                             console.error('登入失敗:', error);
                         });
+            
                 }
             }
         };

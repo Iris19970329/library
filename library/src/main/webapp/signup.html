@@ -10,8 +10,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
 </head>
@@ -31,12 +29,6 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="main.html" style="color: white;">首頁</a>
 						</li>
-						<!-- <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: white;">我要揪團</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: white;">場地資訊</a>
-                        </li> -->
 					</ul>
 					<a href="login.html" class="btn btn-light ms-auto">登入</a>
 					<a href="signup.html" class="btn btn-light mx-3">註冊</a>
@@ -99,22 +91,22 @@
 						userName: this.username
 					};
 
+
 					axios.post('/signup', signupData)
-						.then((response) => { // 使用箭頭函數
-							alert('新增帳號成功');
+						.then(response => {							
 							console.log("新增帳號成功: ", response);
-							window.location.href='main.html';
+							alert('新增帳號成功');
 						})
 						.catch(error => {
-							alert('新增失敗');
 							console.error('新增失敗:', error);
+							alert('新增失敗: ' + error.response.data);
 						});
+
 				}
 			}
-		});
+		})
 
 		app.mount('#signupform');
-
 	</script>
 
 
