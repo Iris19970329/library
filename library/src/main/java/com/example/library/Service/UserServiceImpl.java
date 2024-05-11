@@ -32,14 +32,14 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public String login(User user) {
+	public int login(User user) {
 		List<User> userdetail = userdao.findByPhoneNumber(user.getPhoneNumber());
 		if(userdetail.isEmpty() ) {
-			return "fail";
+			return 0;
 		}else if(BCrypt.checkpw(user.getPassword(), userdetail.get(0).getPassword())) {
-			return "success";
+			return 1;
 		}else {
-			return "fail";
+			return 2;
 		}
 			
 			

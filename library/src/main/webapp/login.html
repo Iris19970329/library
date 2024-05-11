@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登入</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
+
+
+</head>
+
+<body>
+	<div style="background-color: #5CADAD; width:100%; height: 100%; padding-bottom: 5%;">
+		<nav class="navbar navbar-expand-lg" style="background-color: #408080;">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="main.html" style="color: white;">圖書借閱系統</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="main.html" style="color: white;">首頁</a>
+						</li>
+						<!-- <li class="nav-item">
+                            <a class="nav-link" href="#" style="color: white;">我要揪團</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="color: white;">場地資訊</a>
+                        </li> -->
+					</ul>
+					<a href="login.html" class="btn btn-light ms-auto">登入</a>
+					<a href="signup.html" class="btn btn-light mx-3">註冊</a>
+				</div>
+			</div>
+		</nav>
+
+		
+		
+				<form id="loginform" style="width:40%; margin: 11% auto; background-color: white; border-radius: 15px;">
+					<div style="margin-left: 45px; margin-top: 45px;">
+						<p style="font-size:36px; padding-top:25px;">登入</p>
+						<!-- <p id="mesg">{{ message }}</p> -->
+					</div>
+					<div class="row px-5">
+						<label class="col" style="font-size: 24px; margin-top:15px;">手機</label>
+					</div>
+					<div class="row px-5">
+						<input class="col form-control" type="tel" id="telephone" v-model="telephone">
+					</div>
+
+					<div class="row px-5">
+						<label class="col" style="font-size: 24px; margin-top:15px;">密碼</label>
+					</div>
+					<div class="row px-5">
+						<input class="col form-control" type="password" id="passwd" v-model="passwd">
+					</div>
+
+					<div class="row p-5">
+						<input type="submit" class="btn btn-secondary" v-on:click="login()">
+					</div>
+
+				</form>
+	
+	</div>
+
+	<script>
+		// const { createApp, ref } = Vue
+
+		// createApp({
+		//   setup() {
+		//     const message = ref('Hello vue!')
+		//     return {
+		//       message
+		//     }
+		//   }
+		// }).mount('#mesg')
+		const app ={
+            data() {
+                return {
+                    telephone: '',
+                    passwd: ''
+                };
+            },
+            methods: {
+                login() {
+                    const loginData = {
+                        phoneNumber: this.telephone,
+                        password: this.passwd
+                    };
+
+                    axios.post('/login', loginData)
+                        .then(response => {
+							console.log(response.data);
+        					if(response.data === "login_success"){
+								alert('登入成功');
+								
+							}else{
+								alert('登入失敗');
+							}
+				
+                            
+                        })
+                        .catch(error => {
+                            console.error('登入失敗:', error);
+                        });
+                }
+            }
+        };
+
+        Vue.createApp(app).mount('#loginform');
+	
+	</script>
+</body>
+
+</html>

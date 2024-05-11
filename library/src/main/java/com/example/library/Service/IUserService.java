@@ -7,5 +7,5 @@ import com.example.library.Entity.User;
 @Service
 public interface IUserService {
 	User signup(User user);
-	String login(User user);
+	int login(User user);
 }

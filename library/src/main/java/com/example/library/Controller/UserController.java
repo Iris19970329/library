@@ -30,13 +30,13 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public String login(HttpSession session, @RequestBody User user){
-		String loginmesg = userservice.login(user);
-		if (loginmesg == "success") {
+		int loginmesg = userservice.login(user);
+		if (loginmesg == 1) {
 			session.setAttribute("phonenumber", user.getPhoneNumber());
 			session.setAttribute("username",user.getUserName());
-			return "login success";
+			return "login_success";
 		}else {
-			return "login fail";
+			return "login_fail";
 		}
 	}
 }
