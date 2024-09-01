@@ -22,4 +22,10 @@ public class BookController {
 		List<Book> result = bookservice.findBook();
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("/test01")
+	public String test01() {
+		return "test01";
+	}
+
 }
