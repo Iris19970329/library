@@ -27,5 +27,10 @@ public class BookController {
 	public String test01() {
 		return "test01";
 	}
+	
+	@GetMapping("/test02")
+	public String test02() {
+		return "test02";
+	}
 
 }
