@@ -66,7 +66,7 @@
 
 
 			<div class="row p-5">
-				<input type="submit" class="btn btn-secondary" v-on:click="signup()">
+				<input type="submit" class="btn btn-secondary" @click="signup">
 			</div>
 
 		</form>
@@ -84,7 +84,9 @@
 				};
 			},
 			methods: {
-				signup() {
+				signup(event) {
+    				event.preventDefault(); 
+			
 					const signupData = {
 						phoneNumber: this.telephone,
 						password: this.passwd,
@@ -93,13 +95,18 @@
 
 
 					axios.post('/signup', signupData)
-						.then(response => {							
-							console.log("新增帳號成功: ", response);
-							alert('新增帳號成功');
+						.then(response => {
+							const data = response.data;
+							if (data.responsecode === '0000') {
+								alert('註冊成功！');
+								window.location.href = 'login.html';
+							} else {
+								alert('註冊失敗：' + data.responsedescription);
+							}
 						})
 						.catch(error => {
 							console.error('新增失敗:', error);
-							alert('新增失敗: ' + error.response.data);
+							alert('註冊失敗: ' + error.response.data);
 						});
 
 				}

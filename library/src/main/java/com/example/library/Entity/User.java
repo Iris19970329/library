@@ -18,7 +18,6 @@ public class User {
 	private String password;
 	private String userName;
 	private Date registrationTime;
-	private Date lastLoginTime;
 	
 	
 	
@@ -62,30 +61,22 @@ public class User {
 		this.registrationTime = registrationTime;
 	}
 
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
-
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
 
 	public User() {
 		
 	}
 	
-	public User(int userId,String phoneNumber, String password, String userName, Date registrationTime, Date lastLoginTime ) {
+	public User(int userId,String phoneNumber, String password, String userName, Date registrationTime ) {
 		this.userId = userId;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
 		this.userName = userName;
 		this.registrationTime = registrationTime;
-		this.lastLoginTime = lastLoginTime;
 	}
 	
 	@Override
 	public String toString() {
 		return "User [ userId=" +  userId + ",phoneNumber = " + phoneNumber + ",password = " + password + ",userName = " + userName +
-				",registrationTime" + registrationTime + ",lastLoginTime" + lastLoginTime + "]"; 
+				",registrationTime" + registrationTime + "]"; 
 	}
 }

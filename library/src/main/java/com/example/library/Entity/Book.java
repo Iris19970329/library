@@ -1,8 +1,6 @@
 package com.example.library.Entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -14,7 +12,16 @@ public class Book {
 	private String name;
 	private String author;
 	private String introduction;
+	private int available;
 	
+	public int getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(int available) {
+		this.available = available;
+	}
+
 	public String getiSBN() {
 		return iSBN;
 	}
