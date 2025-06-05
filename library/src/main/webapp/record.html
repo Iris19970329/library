@@ -40,26 +40,27 @@
 			</div>
 		</nav>
 
-		<table class="table table-border" style="width: 80%; margin: 5% auto;">
+		<table class="table table-border" style="width: 80%; margin: 5% auto 30% auto;">
 			<thead>
 				<tr>
 					<th>ISBN</th>
 					<th>書名</th>
-					<th>作者</th>
-					<th>書籍內容簡介</th>
+					<th>借閱時間</th>
+					<th>歸還時間</th>
+					<th>借閱狀態</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(book, index) in books" :key="index">
-					<td>{{ book.iSBN }}</td>
-					<td>{{ book.name }}</td>
-					<td>{{ book.author }}</td>
-					<td>{{ book.introduction }}</td>
+				<tr v-for="(br, index) in borrowrecord" :key="index">
+					<td>{{ br.iSBN }}</td>
+					<td>{{ br.bookname }}</td>
+					<td>{{ br.borrowingTime }}</td>
+					<td>{{ br.returnTime }}</td>
+					<td>{{  br.status === 1 ? '借閱中' : '已歸還' }}</td>
 					<td>
-						<button class="btn" :class="book.available === 1 ? 'btn-success' : 'btn-secondary'"
-							:disabled="book.available !== 1" @click="borrowBook(book.iSBN)">
-							借閱
+						<button v-if="br.status === 1" class="btn btn-success" @click="returnBook(br.iSBN)">
+							歸還
 						</button>
 					</td>
 				</tr>
@@ -72,15 +73,15 @@
 
 		createApp({
 			setup() {
-				const books = ref([]);
+				const borrowrecord = ref([]);
 				const isLoggedIn = ref(false);
 				const username = ref('');
 
 
-				const fetchBooks = () => {
-					axios.get('/findBook')
+				const fetchRecord = () => {
+					axios.get('/getBorrowRecord')
 						.then(response => {
-							books.value = response.data;
+							borrowrecord.value = response.data;
 						})
 						.catch(error => {
 							console.error('獲取書籍失敗:', error);
@@ -106,44 +107,44 @@
 					axios.post('/logout')
 						.then(() => {
 							alert('已登出');
-							location.reload();
+							window.location.href = 'main.html';
 						})
 						.catch(err => {
 							console.error('登出失敗:', err);
 						});
 				};
 
-				const borrowBook = (iSBN) => {
+				const returnBook = (iSBN) => {
 					const requestData = {iSBN: iSBN};
 
-					axios.post('/borrowBook', requestData)
+					axios.post('/returnBook', requestData)
 						.then(response => {
 							const res = response.data;
 							if (res.responsecode === '0000') {
-								alert('借書成功');
-								fetchBooks(); // 更新借閱狀態
+								alert('還書成功');
+								fetchRecord(); // 更新借閱狀態
 							} else if (res.responsecode === '0008') {
-								alert('請先登入後再借書');
+								alert('請先登入後再還書');
 								window.location.href = 'login.html';
 							} else {
-								alert('借書失敗：' + res.responsedescription);
+								alert('還書失敗：' + res.responsedescription);
 							}
 						})
 						.catch(error => {
-							console.error('借書錯誤:', error);
+							console.error('還書錯誤:', error);
 							alert('系統錯誤，請稍後再試');
 						});
 				};
 
 
 				onMounted(() => {
-					fetchBooks();
+					fetchRecord();
 					checkLogin();
 				});
 
 				return {
-					books,
-					borrowBook,
+					borrowrecord,
+					returnBook,
 					isLoggedIn,
 					username,
 					logout

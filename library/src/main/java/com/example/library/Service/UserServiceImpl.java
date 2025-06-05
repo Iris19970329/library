@@ -7,41 +7,43 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.library.Dao.IUserDao;
+import com.example.library.Dao.UserDaoJDBC;
+import com.example.library.Entity.MyException;
 import com.example.library.Entity.User;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	private IUserDao userdao;
+	private UserDaoJDBC userdaojdbc;
 	
 	@Override
-	public User signup(User user){
-		List<User> userinfo = userdao.findByPhoneNumber(user.getPhoneNumber());
-		if (userinfo.isEmpty()) {
+	public void signup(User user) throws MyException {
+		User userinfo = userdaojdbc.findUserByPhoneNumber(user.getPhoneNumber());
+		if (userinfo == null) {
 			String passwd = user.getPassword();
 			String enpasswd = BCrypt.hashpw(passwd, BCrypt.gensalt());
 			user.setPassword(enpasswd);
-			return userdao.save(user);
+			userdaojdbc.insertNewUser(user);
 			
 		}else {
-			throw new IllegalArgumentException("手機號碼已存在");
+			throw new MyException("0004","手機號碼已存在");
 		} 
 		
 	}
 	
 	@Override
-	public int login(User user) {
-		List<User> userdetail = userdao.findByPhoneNumber(user.getPhoneNumber());
-		if(userdetail.isEmpty() ) {
-			return 0;
-		}else if(BCrypt.checkpw(user.getPassword(), userdetail.get(0).getPassword())) {
-			return 1;
-		}else {
-			return 2;
+	public User login(User user) throws MyException {
+		User userinfo = userdaojdbc.findUserByPhoneNumber(user.getPhoneNumber());
+		if(userinfo!= null) {
+			if (BCrypt.checkpw(user.getPassword(), userinfo.getPassword())) {
+				return userinfo;
+			}else {
+				return null;
+			}
+		
 		}
-			
+		return userinfo;
 			
 	}
 

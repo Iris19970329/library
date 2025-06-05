@@ -1,6 +1,8 @@
 package com.example.library.Entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.CascadeType;
@@ -12,76 +14,73 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
-@IdClass(Borrowingrecord.BorrowingrecordId.class)
 public class Borrowingrecord implements Serializable {
 
 	@Id
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "userId")
-	private User userId;
+	private int userId;
 	
 	@Id
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "inventoryId")
-	private Inventory inventoryId;
+	private String iSBN;
 	
-	private Date borrowingTime;
-	private Date returnTime;
+	private LocalDateTime borrowingTime;
+	private LocalDateTime returnTime;
+	private int status;
 	
+	private String bookname;
 
 
 
-	public User getUserId() {
+	public String getBookname() {
+		return bookname;
+	}
+
+	public void setBookname(String bookname) {
+		this.bookname = bookname;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(User userId) {
-		this.userId = userId;
+	public void setUserId(int i) {
+		this.userId = i;
 	}
 
-	public Inventory getInventoryId() {
-		return inventoryId;
+	public String getiSBN() {
+		return iSBN;
 	}
 
-	public void setInventoryId(Inventory inventoryId) {
-		this.inventoryId = inventoryId;
+	public void setiSBN(String string) {
+		this.iSBN = string;
 	}
 
-	public Date getBorrowingTime() {
+	public LocalDateTime getBorrowingTime() {
 		return borrowingTime;
 	}
 
-	public void setBorrowingTime(Date borrowingTime) {
+	public void setBorrowingTime(LocalDateTime borrowingTime) {
 		this.borrowingTime = borrowingTime;
 	}
 
-	public Date getReturnTime() {
+	public LocalDateTime getReturnTime() {
 		return returnTime;
 	}
 
-	public void setReturnTime(Date returnTime) {
+	public void setReturnTime(LocalDateTime returnTime) {
 		this.returnTime = returnTime;
 	}
 
 	public Borrowingrecord( ) {
 		
 	}
-	
-	
-	public static class BorrowingrecordId implements Serializable {
-	    private User userId;
-	    private Inventory inventoryId;
-	    
-	    public BorrowingrecordId() {
-			
-		}
-	    
-	    public BorrowingrecordId(User userId, Inventory inventoryId) {
-
-	    	this.userId=userId;
-	    	this.inventoryId=inventoryId;
-		}
-	    }
 	
 	
 	
