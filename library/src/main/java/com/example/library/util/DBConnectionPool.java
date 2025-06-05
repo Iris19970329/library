@@ -15,7 +15,6 @@ public class DBConnectionPool {
         config.setJdbcUrl("jdbc:mysql://localhost:3306/library?serverTimezone=Asia/Taipei&characterEncoding=utf-8");
         config.setUsername("root");
         config.setPassword("root");
-        //config.setMaximumPoolSize(10);
 
         dataSource = new HikariDataSource(config);
     }
